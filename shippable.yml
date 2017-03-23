@@ -5,27 +5,38 @@ node_js:
   - 0.10
   - 0.12
   - 4.2.3
-  - 4.6.0
-  - 5.12.0
-  - 6.7.0
-  - 6.8.0
-  - 6.9.4
-  - 7.0.0
-  - 7.1.0
-  - 7.2.1
-  - 7.3.0
-  - 7.4.0
-  - iojs-1.0.0
-  - iojs-2.0.0
-  - iojs-3.3.1
-
-
-
 build:
-  ci:
-    - node --version
-    
+  #pre_ci:
+   # - docker build -t=shiphitchcock4/hitchcock4_sample_nodenew .  
+
   pre_ci_boot:
-    image_name: drydock/u14nodall
-    image_tag: master
-    pull: true 
+    image_name: shiphitchcock4/hitchcock4_sample_node
+    image_tag: latest
+    pull: true
+    options: '--privileged=true --net=bridge -e FOO=true -e BOO=false'
+
+  ci:  
+    - ps -eax
+    - ls -al
+    #- if [ "$SHIPPABLE_NODE_JS_VERSION" == "0.12" ]; then foobar; fi
+    
+
+  
+    
+
+   
+ 
+
+    #- sleep 7000
+  
+ 
+  #post_ci:
+   # - docker push shiphitchcock4/hitchcock4_sample_nodenew
+  cache: true
+
+integrations:
+  hub:
+    - integrationName: ship4-docker
+type: docker
+
+
